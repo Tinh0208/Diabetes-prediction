@@ -1,0 +1,1 @@
+cách run code chạy lệh: python manage.py runserver

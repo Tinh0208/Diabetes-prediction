@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title style="margin: 20px">Dự đoán bệnh tiểu đường</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <linThư
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=ABeeZee"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Lora"
+    />
+    <link rel="stylesheet" href="static/css/styles.min.css" />
+    <style>
+      input:hover {
+        color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="article-clean">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
+            <div class="intro">
+              <h1 class="text-center" style="font-family: ABeeZee, sans-serif">
+                Dự đoán bệnh tiểu đường
+              </h1>
+            </div>
+            <div class="text">
+              <p>
+                <br />Mục đích của website này là dự đoán bạn có bị tiểu đường
+                không một loạt các yếu tố liên quan đến sức khỏe và mối liên hệ
+                giữa chúng để phân loại bệnh tiểu đường một cách chính xác.
+                Những yếu tố này bao gồm các khía cạnh như tuổi tác, giới tính,
+                chỉ số khối cơ thể (BMI), tăng huyết áp, bệnh tim, tiền sử hút
+                thuốc, mức HbA1c và mức đường huyết. <br /><br />
+              </p>
+              <h2>Dữ liệu</h2>
+
+              <div class="container" style="overflow-x: auto">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>gender</th>
+                      <th>age</th>
+                      <th>hypertension</th>
+                      <th>heart_disease</th>
+                      <th>smoking_history</th>
+                      <th>bmi</th>
+                      <th>HbA1c_level</th>
+                      <th>blood_glucose_level</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if d %} {% for i in d %}
+                    <tr>
+                      <td>{{i.gender}}</td>
+                      <td>{{i.age}}</td>
+                      <td>{{i.hypertension}}</td>
+                      <td>{{i.heart_disease}}</td>
+                      <td>{{i.smoking_history}}</td>
+                      <td>{{i.bmi}}</td>
+                      <td>{{i.HbA1c_level}}</td>
+                      <td>{{i.blood_glucose_level}}</td>
+                    </tr>
+                    {% endfor %} {% endif %}
+                  </tbody>
+                </table>
+              </div>
+
+              <div align="center" style="margin-top: 15px">
+                <h4
+                  class="text-center"
+                  style="font-family: ABeeZee, sans-serif"
+                >
+                  Hãy bấm vào
+                  <span style="color: red">
+                    nút bắt đầu để tôi dự đoán giúp bạn</span
+                  >
+                </h4>
+                <form action="predict">
+                  <input
+                    type="submit"
+                    value="Bắt đầu "
+                    style="margin-bottom: 20px"
+                  />
+                </form>
+              </div>
+              <div>
+                {{ dataframe|safe }}
+                <!-- Hiển thị pandas DataFrame -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

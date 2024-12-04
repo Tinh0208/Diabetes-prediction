@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Predict</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+    <style>
+      body {
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+      }
+
+      .child1 {
+        background-color: #ffffff;
+        border-radius: 10px;
+        align-items: center;
+        padding: 2%;
+        width: 50%;
+      }
+
+      h1 {
+        color: #008;
+        font-size: 30px;
+        font-weight: bold;
+      }
+
+      input[typle="submit"] {
+        background-color: #4dc3ff;
+        border: 2px;
+        color: white;
+        padding: 8px 16px;
+        cursor: pointer;
+        margin-top: 15;
+        height: 30px;
+      }
+
+      td {
+        padding-top: 20px;
+      }
+
+      .child2 {
+        background-image: url("{% static 'images/giaithich.png'%}");
+        background-size: 700px 670px;
+        background-repeat: no-repeat;
+        width: 50%;
+        /* Thiết lập chiều rộng cho div */
+      }
+    </style>
+  </head>
+
+  <body>
+    <div style="display: flex; margin-top: 30px">
+      <div align="center" class="child1">
+        <h1>Hãy nhập vào các ô để tôi dự đoán giúp bạn</h1>
+        <form
+          action="result "
+          id="predictionForm"
+          onsubmit="return validateForm()"
+        >
+          <table>
+            <tr>
+              <td align="right">Nhập vào giới tính</td>
+              <td align="left" style="padding-left: 12px">
+                <input
+                  type="text"
+                  name="n1"
+                  placeholder="Hãy nhập số 0 hoặc 1 (1 là nam, 0 là nữ)"
+                  style="width: 300px; height: 30px"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td align="right">Nhập vào tuổi</td>
+              <td align="left" style="padding-left: 12px">
+                <input
+                  type="text"
+                  name="n2"
+                  style="width: 300px; height: 30px"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td align="right">Nhập vào bạn có bị cao huyết áp không</td>
+              <td align="left" style="padding-left: 12px">
+                <input
+                  type="text"
+                  name="n3"
+                  style="width: 300px; height: 30px"
+                  placeholder="Hãy nhập số 0 hoặc 1 (0 là không bị ,1 là bị)"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td align="right">Nhập vào bạn có bị bệnh tim mạch không</td>
+              <td align="left" style="padding-left: 12px">
+                <input
+                  type="text"
+                  name="n4"
+                  style="width: 300px; height: 30px"
+                  placeholder="Hãy nhập số 0 hoặc 1 (0 là không bị ,1 là bị)"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td align="right">Nhập vào bạn có hút thuốc không</td>
+              <td align="left" style="padding-left: 12px">
+                <input
+                  type="text "
+                  name="n5"
+                  placeholder="Hãy nhập số 0 hoặc 1 (0 là không có,1 là có) "
+                  style="width: 300px; height: 30px"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td align="right ">Nhập vào BMI</td>
+              <td align="left " style="padding-left: 12px">
+                <input
+                  type="text "
+                  name="n6"
+                  placeholder="Nhập chỉ số BMI của bạn vào đây"
+                  style="width: 300px; height: 30px"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td align="right ">Nhập vào chỉ số Hemoglobin glycosyl</td>
+              <td align="left " style="padding-left: 12px">
+                <input
+                  type="text "
+                  name="n7"
+                  style="width: 300px; height: 30px"
+                  placeholder="Nhập chỉ số Hemoglobin glycosyl của bạn vào đây"
+                />
+              </td>
+            </tr>
+
+            <tr>
+              <td align="right ">Nhập vào mức đường huyết</td>
+              <td align="left " style="padding-left: 12px">
+                <input
+                  type="text "
+                  name="n8"
+                  style="width: 300px; height: 30px"
+                  placeholder="Nhập chỉ số đường huyết của bạn vào đây "
+                />
+              </td>
+            </tr>
+          </table>
+
+          <input type="submit" value="Dự đoán" style="margin-top: 20px" />
+          <div
+            id="errorMessage"
+            style="color: red; margin: 10px 0px 10px 0px"
+          ></div>
+        </form>
+        Kết quả:{{result2}}
+      </div>
+      <div class="child2" align="right"></div>
+    </div>
+  </body>
+  <script>
+    function validateForm() {
+      var inputs = document
+        .getElementById("predictionForm")
+        .getElementsByTagName("input");
+      for (var i = 0; i < inputs.length; i++) {
+        if (
+          isNaN(inputs.n1.value) ||
+          isNaN(inputs.n2.value) ||
+          isNaN(inputs.n3.value) ||
+          isNaN(inputs.n4.value) ||
+          isNaN(inputs.n5.value) ||
+          isNaN(inputs.n6.value) ||
+          isNaN(inputs.n7.value)
+        ) {
+          document.getElementById("errorMessage").innerText =
+            "Vui lòng nhập vào là số";
+          return false;
+        }
+
+        if (inputs[i].value.trim() === "") {
+          document.getElementById("errorMessage").innerText =
+            "Vui lòng nhập đầy đủ thông tin";
+          return false;
+        }
+      }
+      return true;
+    }
+  </script>
+</html>
